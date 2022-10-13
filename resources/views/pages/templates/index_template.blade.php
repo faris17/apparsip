@@ -27,7 +27,7 @@
                                 <td>{{ $row->file }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="{{ route('persetujuan.edit', $row->id) }}">
+                                        <a href="{{ route('templates.edit', $row->id) }}">
                                             <button type="submit" class='btn btn-info'>
                                                 <i class="align-middle" data-feather="edit"></i>
                                             </button>

@@ -55,4 +55,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //transaksi
     Route::resource('transactions', TransaksiController::class);
+
+    Route::get('download/{id}', [TransaksiController::class, 'download'])->name('transactions.download');
 });

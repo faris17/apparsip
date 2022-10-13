@@ -11,5 +11,5 @@ class Transaksi extends Model
 
     protected $table = 'transaksis';
 
-    protected $guarded = [];
+    protected $guarded = ['_token'];
 }

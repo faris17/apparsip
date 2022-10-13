@@ -29,11 +29,16 @@
              @endif
              @csrf
              <div class="col-md-4">
-                 <input type='text' class='form-control' name="jenis_surat" id="jenis_surat" required>
+                 <input type='text' class='form-control' name="jenis_surat" id="jenis_surat"
+                     @if (isset($edit)) value="{{ $edit->jenis_surat }}" @endif required>
              </div>
              <div class="col-md-4">
-                 <input type='file' class='form-control' name="file" required
-                     accept=".doc,.docx,application/msword">
+
+                 <input type='file' class='form-control' name="file"
+                     @if (!isset($edit)) required @endif accept=".doc,.docx,application/msword">
+                 @if (isset($edit))
+                     <span>{{ $edit->file }}</span>
+                 @endif
              </div>
              <div class="col-md-4">
                  @if (isset($edit))

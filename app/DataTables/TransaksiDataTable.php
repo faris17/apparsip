@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Transaksi;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -23,7 +24,31 @@ class TransaksiDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'transaksi.action')
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $action = '';
+
+                $action .= '<a href="' . route("transactions.download", $row->id) . '" class="btn btn-sm btn-icon btn-outline-info" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Download">
+                        <i class="bi-download"></i>
+                     </a> ';
+
+                $action .= '<a href="' . route("transactions.edit", $row->id) . '" class="btn btn-sm btn-icon btn-outline-info" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Edit Data">
+                        <i class="bi-pencil"></i>
+                     </a>';
+
+                $action .= '<form method="post" action="' . route("transactions.destroy", $row->id) . '"
+                    id="deleteJenisSurat" style="display:inline" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="Hapus Data">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="' . csrf_token() . '">
+                    <button type="submit" class="btn btn-outline-danger btn-sm btn-icon">
+                        <i class="bi-trash"></i>
+                    </button></form>';
+
+                return $action;
+            })
             ->setRowId('id');
     }
 
@@ -68,7 +93,7 @@ class TransaksiDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(100)
                 ->addClass('text-center'),
         ];
     }

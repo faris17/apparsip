@@ -12,4 +12,9 @@ class Pegawai extends Model
     protected $table = 'pegawais';
 
     protected $fillable = ['nip', 'nama_pegawai', 'golongan_id', 'jabatan_id'];
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class);
+    }
 }

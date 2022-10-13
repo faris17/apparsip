@@ -37,7 +37,7 @@ class TemplateController extends Controller
 
         $nameFile = strtolower(str_replace(' ', '_', $request->jenis_surat)) . '.' . $extension;
 
-        $request->file('file')->storeAs('public/files', $nameFile);
+        $request->file('file')->put('public/', $nameFile);
 
         //insert to table
         Template::create([
@@ -84,13 +84,13 @@ class TemplateController extends Controller
             $request->validate(['file' => 'required|mimes:doc,docx|max:5048']);
 
             //hapus file lama
-            Storage::delete('/public/files/' . $db->file);
+            File::delete('public/' . $db->file);
 
             $extension = $request->file('file')->extension();
 
             $nameFile = strtolower(str_replace(' ', '_', $request->jenis_surat)) . '.' . $extension;
 
-            $request->file('file')->storeAs('public/files', $nameFile);
+            $request->file('file')->put('public/', $nameFile);
 
             $db->file = $nameFile;
         }
